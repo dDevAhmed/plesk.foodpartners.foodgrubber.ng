@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Resources\UserStoreResource;
+use App\Http\Resources\V1\UserStoreResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
