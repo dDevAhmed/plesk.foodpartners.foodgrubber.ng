@@ -16,7 +16,7 @@ class UserStoreController extends BaseController
     {
         $user = auth()->user();
 
-        $store = $user->userstore()->updateOrCreate(
+        $user->userstore()->updateOrCreate(
             ['user_id' => $user->id], // column/value pairs to find
             [ // column/value pairs to update or create
                 'name' => $request->name,

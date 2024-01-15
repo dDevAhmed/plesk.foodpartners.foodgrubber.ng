@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('phone')->unique()->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->unique();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('postcode')->nullable();
             $table->string('current_location')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('wallet_balance')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

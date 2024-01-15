@@ -27,9 +27,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    // Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::post('/profile', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 });
 
 Route::middleware('auth')->group(function () {
