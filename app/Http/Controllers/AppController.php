@@ -15,8 +15,8 @@ class AppController extends BaseController
     {
         // $user = Auth::user(); // Get the currently authenticated user
 
-        $userStoreUpdated = $this->checkUserStoreUpdated();
-        return view('dashboard', compact('userStoreUpdated'));
+        $userStoreCheck = $this->checkUserStore();
+        return view('dashboard', $userStoreCheck);
 
         // if ($user && $user->hasVerifiedEmail() && $user->active == 1) {
         //     return view('dashboard');

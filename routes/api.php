@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\EmailController;
+use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\StoreController;
 
 /*
@@ -35,6 +36,7 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/forgot-password', [UserController::class, 'forgot_password']);
 
 //ROUTES THAT NEED AUTH AND VERIFIED EMAIL
+// fixme - should add verify in middleware
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
 
@@ -48,6 +50,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/store', [StoreController::class, 'updateStore']);
     // Route::get('/store/logo', [StoreController::class, 'logo']);
     // Route::post('/store/logo', [StoreController::class, 'updateLogo']);
+
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/product/{id}', [ProductController::class, 'show']);
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::post('/product/{id}', [ProductController::class, 'update']);
+    Route::delete('/product/{id}', [ProductController::class, 'destroy']);
+    // Route::resource('products', ProductController::class);
+
 });
 
 // Route::group(['middleware' => ['auth:sanctum', verifiedUser::class]], function () {
@@ -65,6 +75,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 //EMAILS SENDING FUNCTIONALITY
 Route::post('/email/verification-notification', [UserController::class, 'resend']);
+// Route::post('/email/verify', [UserController::class, 'verify']);
 Route::post('/email/verify', [UserController::class, 'check']);
 // Route::post('/email/verification-notification', [EmailController::class, 'resend'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 // Route::get('/email/verify/', [EmailController::class, 'check'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.verify');

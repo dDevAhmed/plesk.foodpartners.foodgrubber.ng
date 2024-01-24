@@ -80,18 +80,39 @@ class UserController extends Controller
 
     public function forgot_password(Request $request)
     {
-        //write a laravel controller that takes a email as the request and sends a password reset link to that email
-
+        // Validate email input
         $request->validate(['email' => 'required|email']);
 
-        $response = $this->broker()->sendResetLink(
-            $request->only('email')
-        );
+        try {
+            // Attempt to send the password reset link
+            $response = $this->broker()->sendResetLink(
+                $request->only('email')
+            );
 
-        return $response == Password::RESET_LINK_SENT
-            ? response()->json(['status' => 'success'], 200)
-            : response()->json(['status' => 'failed'], 400);
+            // Return appropriate response based on the outcome
+            if ($response == Password::RESET_LINK_SENT) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Password reset link sent to your email.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Failed to send password reset link.'
+                ], 400);
+            }
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            // Log::error('Error sending password reset link: ' . $e->getMessage());
+
+            // Return a generic error response to avoid revealing sensitive details
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'An error occurred. Please try again later.'
+            ], 500);
+        }
     }
+
 
     public function logout(Request $request)
     {
@@ -143,51 +164,52 @@ class UserController extends Controller
     public function profile(Request $request)
     {
         // fixme - check if user is authorize for all auth endpoint
-        if(Auth::user()){
+        if (Auth::user()) {
             return auth()->user()->only([
                 'id', 'name', 'phone', 'email', 'address', 'city', 'state', 'country', 'postcode', 'avatar'
             ]);
-        }else{
+        } else {
             return 'No user authenticated';
         }
     }
 
     public function updateProfile(Request $request)
     {
+        // Validate request data
         $fields = $request->validate([
             'phone' => 'required|string',
             'address' => 'required|string',
             'city' => 'required|string',
-            // 'current_location' => 'string',      //getting from geolocation api
             'state' => 'required|string',
             'country' => 'required|string',
             'postcode' => 'string',
         ]);
 
-        $updated = Auth::user()->update([
-            'phone' => $fields['phone'],
-            'address' => $fields['address'],
-            'city' => $fields['city'],
-            'state' => $fields['state'],
-            'country' => $fields['country'],
-            'postcode' => $fields['postcode'],
-        ]);
+        // Update the user's profile
+        $updated = Auth::user()->update($fields);
 
+        // Return an appropriate response based on the update status
         if ($updated) {
-            $response = [
-                'status' => 201,
-                'Message' => 'user details updated successfully'
-            ];
-            return response()->json($response);
+            return response()->json([
+                'status' => 200,  // Use 200 for successful update
+                'message' => 'User details updated successfully'
+            ]);
         } else {
-
-            $response = [
-                'status' => 500,
-                'Message' => 'Error updating user'
-            ];
-            return response()->json($response);
+            return response()->json([
+                'status' => 422,  // Use 422 for unprocessable entity
+                'message' => 'Error updating user',
+                // Optionally include more specific error details if available
+            ], 422);
         }
     }
+
+    public function avatar()
+    {
+        return response()->json([
+            'avatar' => url('img/avatars/' . Auth::user()->avatar)          //fixme - check for the exact location
+        ]);
+    }
+
     public function updateAvatar(Request $request)
     {
         $request->validate([
@@ -201,12 +223,6 @@ class UserController extends Controller
         return response()->json([
             'avatar' => url('img/avatars/' . Auth::user()->avatar),         //fixme - check for the exact location
             'Message' => 'Avatar Updated Successfully'
-        ]);
-    }
-    public function avatar()
-    {
-        return response()->json([
-            'avatar' => url('img/avatars/' . Auth::user()->avatar)          //fixme - check for the exact location
         ]);
     }
 

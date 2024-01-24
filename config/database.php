@@ -83,6 +83,26 @@ return [
             ]) : [],
         ],
 
+        'foodgrubber_customers' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL_CUSTOMERS'),
+            'host' => env('DB_HOST_CUSTOMERS', '127.0.0.1'),
+            'port' => env('DB_PORT_CUSTOMERS', '3306'),
+            'database' => env('DB_DATABASE_CUSTOMERS', 'forge'),
+            'username' => env('DB_USERNAME_CUSTOMERS', 'forge'),
+            'password' => env('DB_PASSWORD_CUSTOMERS', ''),
+            'unix_socket' => env('DB_SOCKET_CUSTOMERS', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA_CUSTOMERS'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

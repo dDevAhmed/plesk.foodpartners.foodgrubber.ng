@@ -1,0 +1,33 @@
+:root {
+    --foodgrubber-primary-color: #fef301;
+    --foodgrubber-secondary-color: #01c324;
+    --foodgrubber-tertiary-color: #454545;
+}
+
+/* products page */
+
+.btn-icon {
+    background-color: transparent;
+    /* Transparent background */
+    border: none;
+    /* No border */
+    padding: 0;
+    /* Remove default padding */
+}
+
+.btn-icon .tf-icons {
+    color: inherit;
+    /* Inherit color from button */
+    font-size: 1.25rem;
+    /* Adjust icon size as needed */
+}
+
+.btn-icon:hover {
+    background-color: inherit;
+    /* Take background color from icon */
+}
+
+.btn-icon:hover .tf-icons {
+    color: #fff;
+    /* White icon color on hover */
+}

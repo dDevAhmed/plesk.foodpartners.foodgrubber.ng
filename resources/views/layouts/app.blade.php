@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Food Partners | Foodgrubber</title>
+    <title>{{ $pageTitle ?? 'Foodgrubber' }}</title>
 
     <meta name="description" content="" />
 
@@ -70,10 +70,13 @@
 
     <!-- datatable -->
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" /> --}}
-    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
     {{-- fontawesome code --}}
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script> --}}
+
+    {{-- custom style --}}
+    <link rel="stylesheet" href="{{ asset('custom.css') }}">
 
   </head>
 
@@ -94,7 +97,7 @@
           <!-- Navbar -->
           {{-- <x-header-nav> --}}
           {{-- @include('partials.navbar') --}}
-          @include('partials.navbar', ['userStoreUpdated' => $userStoreUpdated])
+          @include('partials.navbar')
 
           <!-- / Navbar -->
 
@@ -114,7 +117,7 @@
                       document.write(new Date().getFullYear());
                   </script>
                   ,
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder" style="color: #01C324;">Binfo Group.</a>
+                  <a href="https://binfogroup.com" target="_blank" class="footer-link fw-bolder" style="color: #01C324;">Binfo Group.</a>
                 </div>
               </div>
             </footer>
@@ -161,14 +164,11 @@
     <!-- Page JS -->
     <script src="{{ asset('vendors/sneat/assets/js/dashboards-analytics.js') }}"></script>
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-
     <!-- datatable -->
     {{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script> --}}
     <!-- Page level plugins -->
-    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/plugins/datatables/datatables-demo.js') }}"></script>
@@ -178,6 +178,9 @@
 
     <!-- UI Modals -->
     <script src="{{ asset('vendors/sneat/assets/js/ui-toasts.js') }}"></script>
+
+    {{-- custom script --}}
+    <script src="{{ asset('custom.js') }}"></script>
     
   </body>
 </html>

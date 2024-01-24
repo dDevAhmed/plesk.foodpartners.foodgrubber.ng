@@ -8,8 +8,9 @@ class UserStoreController extends BaseController
 {
     public function index()
     {
-        $userStoreUpdated = $this->checkUserStoreUpdated();
-        return view('store', compact('userStoreUpdated'));
+        $pageTitle = 'Store';  // Set the page title for this view
+        $userStoreCheck = $this->checkUserStore();
+        return view('store', compact('pageTitle', 'userStoreCheck'));
     }
 
     public function update(Request $request)

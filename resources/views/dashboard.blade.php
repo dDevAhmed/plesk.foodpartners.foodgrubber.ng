@@ -8,12 +8,19 @@
                 <div class="card flex flex-col justify-center" style="height: 70vh;">
                     <img src="{{ asset('img/store_illustration.jpg') }}" alt="store image" class="d-block"
                         style="height: 80%; width:auto; margin:auto;" />
-                    <a href="{{ route('store.index', ['userStoreUpdated' => $userStoreUpdated]) }}" class="btn btn-primary"
-                        style="width: fit-content; margin:auto; margin-top:-30px;">Setup Store</a>
+                    @if ($userStoreUpdated)
+                        <a href="{{ route('store.index', ['userStoreUpdated' => $userStoreUpdated]) }}"
+                            class="btn btn-primary" style="width: fit-content; margin:auto; margin-top:-30px;">Update
+                            Store</a>
+                    @else
+                        <a href="{{ route('store.index', ['userStoreUpdated' => $userStoreUpdated]) }}"
+                            class="btn btn-primary" style="width: fit-content; margin:auto; margin-top:-30px;">Setup
+                            Store</a>
+                    @endif
                 </div>
             </div>
         </div>
-        {{-- fixme - show dashboard if user has store set up--}}
+        {{-- fixme - show dashboard if user has store set up --}}
         {{-- <div class="row">
             <div class="col-lg-4 col-md-4 col-12 mb-4">
                 <div class="card">

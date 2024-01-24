@@ -8,6 +8,12 @@
   z-index: 10;
 }
 
+:root {
+  --foodgrubber-primary-color: #fef301;
+  --foodgrubber-secondary-color: #01c324;
+  --foodgrubber-tertiary-color: #454545;
+}
+
 .bg-menu-theme .menu-header {
   position: relative;
 }
@@ -132,9 +138,9 @@ a.bg-primary:hover, a.bg-primary:focus {
 .pagination li.active > a:not(.page-link),
 .pagination li.active > a:not(.page-link):hover,
 .pagination li.active > a:not(.page-link):focus {
-  border-color: #696cff;
-  background-color: #696cff;
-  color: #fff;
+  /* border-color: #696cff; */
+  background-color: var(--foodgrubber-tertiary-color);
+  color: var(--foodgrubber-primary-color);
   box-shadow: 0 0.125rem 0.25rem rgba(105, 108, 255, 0.4);
 }
 
@@ -206,28 +212,28 @@ button.list-group-item-primary.active {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #696cff;
-  border-color: #696cff;
+  color: var(--foodgrubber-primary-color);
+  background-color: var(--foodgrubber-tertiary-color);
+  /* border-color: #696cff; */
   box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
 }
 .btn-primary:hover {
-  color: #fff;
-  background-color: #5f61e6;
-  border-color: #5f61e6;
+  color: var(--foodgrubber-tertiary-color);
+  background-color: var(--foodgrubber-primary-color);
+  /* border-color: #5f61e6; */
   transform: translateY(-1px);
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus, .btn-primary.focus {
-  color: #fff;
-  background-color: #5f61e6;
-  border-color: #5f61e6;
+  color: var(--foodgrubber-tertiary-color);
+  background-color: var(--foodgrubber-primary-color);
+  /* border-color: #5f61e6; */
   transform: translateY(0);
   box-shadow: none;
 }
 .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #595cd9;
-  border-color: #595cd9;
+  color: var(--foodgrubber-tertiary-color);
+  background-color: var(--foodgrubber-primary-color);
+  /* border-color: #595cd9; */
 }
 .btn-check:checked + .btn-primary:focus, .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: none;
@@ -739,7 +745,7 @@ a:hover {
 html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item.open > .menu-link, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.open > .menu-link,
 html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-link:not(.active):hover,
 .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item .menu-link:not(.active):hover {
-  background-color: rgba(67, 89, 113, 0.04);
+  background-color: var(--foodgrubber-primary-color);
 }
 .bg-menu-theme .menu-inner .menu-sub > .menu-item.active > .menu-link.menu-toggle {
   background-color: rgba(67, 89, 113, 0.04);
@@ -748,11 +754,11 @@ html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-lin
   color: #696cff;
 }
 .bg-menu-theme .menu-inner > .menu-item.active > .menu-link {
-  color: #696cff;
-  background-color: rgba(105, 108, 255, 0.16) !important;
+  color: var(--foodgrubber-primary-color);
+  background-color: var(--foodgrubber-tertiary-color) !important;
 }
 .bg-menu-theme .menu-inner > .menu-item.active:before {
-  background: #696cff;
+  background: var(--foodgrubber-tertiary-color);
 }
 .bg-menu-theme .menu-sub > .menu-item > .menu-link:before {
   background-color: #b4bdc6 !important;

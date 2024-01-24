@@ -17,11 +17,12 @@ class ProfileController extends BaseController
 
     public function index()
     {
-        $userStoreUpdated = $this->checkUserStoreUpdated();
-        return view('profile', compact('userStoreUpdated'));
+        $pageTitle = 'Profile';  // Set the page title for this view
+        $userStoreCheck = $this->checkUserStore();
+        return view('profile', compact('pageTitle', 'userStoreCheck'));
     }
 
-    public function update(Request $request)
+    public function updateProfile(Request $request)
     {
         $validatedData = $request->validate([
             'phone' => 'required|string|max:255',
@@ -58,25 +59,17 @@ class ProfileController extends BaseController
         return back()->with('success', 'Password updated successfully');
     }
 
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatarInput' => 'required|image',
+        ]);
 
-    /**
-     * Delete the user's account.
-     */
-    // public function destroy(Request $request): RedirectResponse
-    // {
-    //     $request->validateWithBag('userDeletion', [
-    //         'password' => ['required', 'current_password'],
-    //     ]);
+        $avatarName = time() . '.' . $request->avatar->getClientOriginalExtension();
+        $request->avatar->move(public_path('img/avatars'), $avatarName);
 
-    //     $user = $request->user();
+        Auth()->user()->update(['avatar' => $avatarName]);
 
-    //     Auth::logout();
-
-    //     $user->delete();
-
-    //     $request->session()->invalidate();
-    //     $request->session()->regenerateToken();
-
-    //     return Redirect::to('/');
-    // }
+        return back()->with('success', 'Avatar updated successfully.');
+    }
 }
