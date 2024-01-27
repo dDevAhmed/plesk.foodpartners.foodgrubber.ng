@@ -13,12 +13,16 @@ class BaseController extends Controller
         $user = Auth::user();
 
         // Check for both existence of UserStore and active status
-        $userStoreUpdated = $user->userstore && $user->userstore->id !== '';
-        $userStoreActivated = $user->userstore && $user->userstore->status === 'a';
+        $noUserStore = !$user->userstore;
+        $userStoreCreatedPending = $user->userstore && $user->userstore->status === 'p';
+        $userStoreCreatedAccepted = $user->userstore && $user->userstore->status === 'a';
+        $userStoreAcceptedAway = $user->userstore && $user->userstore->status === 'a' && $user->userstore->availability === false;
         // Collect variables for views:
         $viewData = [
-            'userStoreUpdated' => $userStoreUpdated,
-            'userStoreActivated' => $userStoreActivated,
+            'noUserStore' => $noUserStore,
+            'userStoreCreatedPending' => $userStoreCreatedPending,
+            'userStoreCreatedAccepted' => $userStoreCreatedAccepted,
+            'userStoreAcceptedAway' => $userStoreAcceptedAway,
             // Add more variables as needed
         ];
 

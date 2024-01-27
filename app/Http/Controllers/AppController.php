@@ -22,22 +22,6 @@ class AppController extends BaseController
         //     return view('dashboard');
         // }
 
-
-        // if ($user->userstore) {
-        //     $userStoreUpdated = true;
-
-        //     // return back()->with('fail', "You must set up your store before adding products.");
-        //     return view('dashboard', [
-        //         'userStoreUpdated' => $userStoreUpdated,
-        //     ]);
-        // } else {
-        //     $userStoreUpdated = false;
-
-        //     return view('dashboard', [
-        //         'userStoreUpdated' => $userStoreUpdated,
-        //     ]);
-        // }
-
         // Redirect to a different page if the user is not logged in, not verified, or status is not 1
         // return redirect('welcome')->with(
         //     'message', 

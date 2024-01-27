@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('cover_image')->nullable();
             
-            $table->string('status')->default('p');   //p = pending, s = suspended, a = active
+            $table->string('status')->default('p');   //p = pending, s = suspended, a = accepted
             
             $table->timestamps();
         });

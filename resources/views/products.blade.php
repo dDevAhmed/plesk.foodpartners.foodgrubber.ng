@@ -47,7 +47,7 @@
                                             <label for="cuisine" class="form-label">Cuisine</label>
                                             {{-- fixme - cuisine and category and measurement are coming from admin database --}}
                                             <select class="form-select" id="cuisine" name="cuisine"
-                                                aria-label="Default select example" required>
+                                                aria-label="Default select example">
                                                 <option value="">...select product cuisine...</option>
                                                 <option value="African">African</option>
                                                 <option value="Indian">Indian</option>

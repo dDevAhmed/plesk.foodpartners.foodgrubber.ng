@@ -46,45 +46,52 @@
             </a>
         </li>
 
-        {{-- fixme - uncomment back --}}
-        {{-- @if ($userStoreActivated)    --}}
-        <li class="menu-item {{ Request::is('products') ? 'active' : '' }}">
-            <a href="{{ route('products.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="Basic">Products</div>
-            </a>
-        </li>
+        @if (isset(Auth::user()->userstore) && Auth::user()->userstore->status === 'a')
+            <li class="menu-item {{ Request::is('products') ? 'active' : '' }}">
+                <a href="{{ route('products.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-box"></i>
+                    <div data-i18n="Basic">Products</div>
+                </a>
+            </li>
 
-        <li class="menu-item {{ Request::is('orders') ? 'active' : '' }}">
-            <a href="{{ route('orders.index') }}" class="menu-link d-flex justify-content-between">
-                <div class="d-flex">
-                    <i class="menu-icon tf-icons bx bx-basket"></i>
-                    <div data-i18n="Basic">Orders</div>
-                </div>
-                <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-            </a>
-        </li>
+            <li class="menu-item {{ Request::is('orders') ? 'active' : '' }}">
+                <a href="{{ route('orders.index') }}" class="menu-link d-flex justify-content-between">
+                    <div class="d-flex">
+                        <i class="menu-icon tf-icons bx bx-basket"></i>
+                        <div data-i18n="Basic">Orders</div>
+                    </div>
+                    {{-- show dynamically --}}
+                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                </a>
+            </li>
 
-        <li class="menu-item {{ Request::is('feedbacks') ? 'active' : '' }}">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-comment"></i>
-                <div data-i18n="Basic">Feedbacks</div>
-            </a>
-        </li>
-        <li class="menu-item {{ Request::is('marketing') ? 'active' : '' }}">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-megaphone"></i>
-                <div data-i18n="Basic">Marketing</div>
-            </a>
-        </li>
+            <li class="menu-item {{ Request::is('feedbacks') ? 'active' : '' }}">
+                <a href="#" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-comment"></i>
+                    <div data-i18n="Basic">Feedbacks</div>
+                </a>
+            </li>
 
-        <li class="menu-item {{ Request::is('reports') ? 'active' : '' }}">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-report"></i>
-                <div data-i18n="Basic">Reports</div>
-            </a>
-        </li>
-        {{-- fixme - uncomment back --}}
-        {{-- @endif --}}
+            <li class="menu-item {{ Request::is('marketing') ? 'active' : '' }}">
+                <a href="#" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-megaphone"></i>
+                    <div data-i18n="Basic">Marketing</div>
+                </a>
+            </li>
+
+            <li class="menu-item {{ Request::is('earnings') ? 'active' : '' }}">
+                <a href="#" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-money"></i>
+                    <div data-i18n="Basic">Earnings</div>
+                </a>
+            </li>
+
+            <li class="menu-item {{ Request::is('reports') ? 'active' : '' }}">
+                <a href="#" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-report"></i>
+                    <div data-i18n="Basic">Reports</div>
+                </a>
+            </li>
+        @endif
     </ul>
 </aside>

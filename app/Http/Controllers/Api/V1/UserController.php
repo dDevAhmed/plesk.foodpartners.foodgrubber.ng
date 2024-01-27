@@ -202,7 +202,6 @@ class UserController extends Controller
             ], 422);
         }
     }
-
     public function avatar()
     {
         return response()->json([

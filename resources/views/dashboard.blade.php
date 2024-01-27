@@ -8,13 +8,14 @@
                 <div class="card flex flex-col justify-center" style="height: 70vh;">
                     <img src="{{ asset('img/store_illustration.jpg') }}" alt="store image" class="d-block"
                         style="height: 80%; width:auto; margin:auto;" />
-                    @if ($userStoreUpdated)
-                        <a href="{{ route('store.index', ['userStoreUpdated' => $userStoreUpdated]) }}"
-                            class="btn btn-primary" style="width: fit-content; margin:auto; margin-top:-30px;">Update
+                    @if ($noUserStore)
+                        <a href="{{ route('store.index', ['userStoreCreatedAccepted' => $userStoreCreatedAccepted]) }}"
+                            class="btn btn-primary" style="width: fit-content; margin:auto; margin-top:-30px;">Create
                             Store</a>
-                    @else
-                        <a href="{{ route('store.index', ['userStoreUpdated' => $userStoreUpdated]) }}"
-                            class="btn btn-primary" style="width: fit-content; margin:auto; margin-top:-30px;">Setup
+                    @elseif ($userStoreCreatedAccepted)
+                        {{-- <a href="{{ route('store.index', ['userStoreUpdated' => $userStoreUpdated]) }}" --}}
+                        <a href="{{ route('store.index', ['userStoreCreatedAccepted' => $userStoreCreatedAccepted]) }}"
+                            class="btn btn-primary" style="width: fit-content; margin:auto; margin-top:-30px;">Update
                             Store</a>
                     @endif
                 </div>
