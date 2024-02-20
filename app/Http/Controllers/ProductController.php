@@ -32,10 +32,24 @@ class ProductController extends BaseController
         ]);
 
         // fixme - store image as binary
+        // if ($request->hasFile('image1')) {
+        //     $image1Name = time() . '_1.' . $request->image1->getClientOriginalExtension();
+        //     $request->image1->move(public_path('img/products'), $image1Name);
+        //     $product->image1 = $image1Name;
+        // }
+
+        // if ($request->hasFile('image1')) {
+        //     $imagePath1 = $request->image1->store(public_path('img/products')); // Store image temporarily
+        //     $image1Contents = file_get_contents($imagePath1);
+        //     $encodedImage1 = base64_encode($image1Contents);
+        //     unlink($imagePath1); // Remove temporary file
+        //     $product->image1 = $encodedImage1;
+        // }
+
         if ($request->hasFile('image1')) {
-            $image1Name = time() . '_1.' . $request->image1->getClientOriginalExtension();
-            $request->image1->move(public_path('img/products'), $image1Name);
-            $product->image1 = $image1Name;
+            $image1File = $request->file('image1');
+            $encodedImage1 = base64_encode(file_get_contents($image1File->getRealPath()));
+            $product->image1 = $encodedImage1;
         }
 
         if ($request->hasFile('image2')) {

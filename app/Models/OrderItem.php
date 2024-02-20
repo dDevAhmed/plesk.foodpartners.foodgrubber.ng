@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class OrderItem extends Model
 {
     use HasFactory;
 
     protected $connection = 'foodgrubber_customers';
-    protected $table = 'orders'; 
+    protected $table = 'order_items'; 
 
-    protected $fillable = ['status'];
-
-    public function orderItem()
+    public function order()
     {
-        return $this->hasMany(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }

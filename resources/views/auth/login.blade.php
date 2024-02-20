@@ -85,7 +85,7 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="https://foodgrubber.ng/" target="_blank" class="app-brand-link gap-2">
+                <a href="https://foodgrubbergreen.com/" target="_blank" class="app-brand-link gap-2">
                   <img src="{{ asset('img/logo.png') }}" alt="foodgrubber logo" width="120px">
                   {{-- <span class="app-brand-text demo text-body fw-bolder">Foodgrubber</span> --}}
                 </a>

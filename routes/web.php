@@ -40,7 +40,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/store', [UserStoreController::class, 'index'])->name('store.index');
-    Route::post('/store', [UserStoreController::class, 'update'])->name('store.update');
+    Route::post('/store', [UserStoreController::class, 'updateStore'])->name('store.update');
+    Route::post('/store/logo', [UserStoreController::class, 'updateLogo'])->name('store.logo.update');
     // logo and cover to come later
 });
 

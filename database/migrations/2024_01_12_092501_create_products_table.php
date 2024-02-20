@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('category')->nullable();
             $table->string('description')->nullable();
             $table->string('measurement')->nullable();      //wrap, bottle, pack, kg...
-            $table->text('image1')->nullable();
+            $table->longtext('image1')->nullable();
             $table->text('image2')->nullable();
             $table->boolean('availability')->default(1);     //0 = not available, 1 = available
             $table->timestamps();

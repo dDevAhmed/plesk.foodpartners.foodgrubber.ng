@@ -32,7 +32,7 @@
         </div>
     </div>
     @if ($product->availability == 0)
-        <div class="card-f bg-danger text-white text-center p-" style="height: 20px !important;">
+        <div class="card-f bg-danger text-white text-center" style="height: 20px !important; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
             <p style="margin-top:-2px;">inactive</p>
         </div>
     @endif

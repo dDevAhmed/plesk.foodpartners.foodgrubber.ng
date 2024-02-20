@@ -8,14 +8,42 @@
             <div class="col-md-12">
                 <div class="card mb-4">
                     <h5 class="card-header">Store Details</h5>
-                    <!-- Account -->
-                    {{-- <div class="card-body"> --}}
-                    {{-- <div class="d-flex align-items-start align-items-sm-center gap-4"> --}}
-                    {{-- <img src="{{ Auth::user()->image ? asset('img/avatars/' . Auth::user()->image) : asset('img/avatars/default_profile_picture.png') }}" --}}
-                    {{-- todo - store logo/cover --}}
-                    {{-- </div> --}}
-                    {{-- </div> --}}
-                    {{-- <hr class="my-0" /> --}}
+
+                    <!-- Store Logo / cover -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                {{-- <form id="logoForm" action="{{ route('store.logo.update') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <img src="{{ Auth::user()->userstore->logo ? asset('img/logos/' . Auth::user()->userstore->logo) : asset('img/default_store_logo.jpg') }}"
+                                        alt="user-avatar" class="d-block rounded border" height="160" width="160"
+                                        id="storeLogo" />
+                                    <br>
+                                    <input type="file" name="logo" id="logoInput" class="d-none">
+                                    @error('logo')
+                                        <p class="font-light" style="color: red;">{{ $message }}</p>
+                                    @enderror
+                                    <button type="button" class="btn btn-primary" id="logoUpload" >Upload new logo</button>
+                                </form> --}}
+                            </div>
+                            <div class="col-md-8">
+                                <img src="img/default_store_cover.jpg" alt="user-avatar" class="d-block rounded border"
+                                    height="160" width="360" id="uploadedAvatar" />
+                                <br>
+                                <div class="button-wrapper">
+                                    <label for="upload" class="btn btn-primary me-2" tabindex="0">
+                                        <span class="d-none d-sm-block">Upload new cover</span>
+                                        <i class="bx bx-upload d-block d-sm-none"></i>
+                                        <input type="file" id="upload" class="account-file-input" hidden
+                                            accept="image/png, image/jpeg" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
                     <div class="card-body">
                         <form id="formAccountSettings" method="POST" action="{{ route('store.update', auth()->id()) }}"
                             enctype="multipart/form-data">
@@ -59,7 +87,8 @@
                                 </div>
                                 <div class="mb-3 col-md-4">
                                     <label for="food_cert_number" class="form-label">Food Certificate Number</label>
-                                    <input type="text" class="form-control" id="food_cert_number" name="food_cert_number"
+                                    <input type="text" class="form-control" id="food_cert_number"
+                                        name="food_cert_number"
                                         value="{{ optional(Auth::user()->userstore)->food_cert_number }}" required />
                                 </div>
                                 <div class="mb-3 col-md-8">
@@ -98,4 +127,33 @@
             </div>
         </div>
     </div>
+
+    @push('script')
+        {{-- <script>
+            @if (session('success'))
+                showToast("{{ session('success') }}", "success");
+            @elseif (session('fail'))
+                showToast("{{ session('fail') }}", "fail");
+            @endif
+        </script> --}}
+
+        <script>
+            $(document).ready(function() {
+                $('#logoUpload').on('click', function() {
+                    console.log(' upload logoooooooooo');
+                    alert('Upload photo');
+                    $('#logoInput').trigger('click');
+                });
+
+                $('#logoInput').on('change', function(event) {
+                    var selectedImageFile = event.target.files[0];
+                    if (selectedImageFile) {
+                        var imageObjectURL = URL.createObjectURL(selectedImageFile);
+                        $('#storeLogo').attr('src', imageObjectURL);
+                        $('#logoForm').submit(); // submit the form
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection

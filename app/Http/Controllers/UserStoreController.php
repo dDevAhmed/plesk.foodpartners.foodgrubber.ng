@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BaseController;
 
 class UserStoreController extends BaseController
@@ -15,7 +16,7 @@ class UserStoreController extends BaseController
         return view('store', compact('pageTitle', 'userStoreCheck'));
     }
 
-    public function update(Request $request)
+    public function updateStore(Request $request)
     {
         $user = auth()->user();
 
@@ -63,7 +64,28 @@ class UserStoreController extends BaseController
         return back()->with('success', "Store Updated successfully");
     }
 
-    public function updateStoreAvailability(){
-        // 'availability' => $request->availability,        //use toggle button
+    public function updateLogo(Request $request)
+    {
+        $request->validate([
+            'logo' => 'required|image',
+        ]);
+
+        // Get the uploaded image file
+        $image = $request->file('logo');
+
+        // Encode the image as base64
+        $encodedImage = base64_encode(file_get_contents($image->getRealPath()));
+
+        // Update the food partner model with the base64 image
+        // $foodPartner = FoodPartner::find(/* your food partner ID here */); // Replace with your logic to fetch the food partner
+        $foodPartner = Auth::user()->userstore();
+        $foodPartner->update(['logo' => $encodedImage]);
+
+        return back()->with('success', 'Logo updated successfully.');
     }
+
+
+    // public function updateStoreAvailability(){
+        // 'availability' => $request->availability,        //use toggle button
+    // }
 }

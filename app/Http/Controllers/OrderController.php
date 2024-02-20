@@ -10,6 +10,53 @@ use App\Http\Controllers\BaseController;
 class OrderController extends BaseController
 {
 
+    public function order()
+    {
+        if (!Auth::check()) {
+            // Redirect to login or display a message
+            return response()->json([
+                'status' => 400,
+                'message' => 'Please log in to view your cart.'      
+            ]);
+        }
+
+        $cart = Auth::user()->cart()->with('cartItems')->first();
+
+        if (!$cart) {
+            // Handle empty cart scenario
+            // (e.g., display message or redirect to storefront)
+            return response()->json([
+                'status' => 400,
+                'message' => 'You don\'t have products in cart, add products first.'      
+            ]);
+        }
+
+        $cartItems = $cart->cartItems;
+        $cartCount = $cart->quantity;
+        $cartTotalPrice = $cart->total;
+        
+        return response()->json([
+            'status' => 200,
+            'cartTotalPrice' => $cartTotalPrice,
+            'cartCount' => $cartCount,
+            'cartItems' => $cartItems        
+        ]);
+    }
+
+
+    // public function orderCount()
+    // {
+    //     if (Auth::check()) {
+    //         $cart = Auth::user()->cart;
+    //         $count = $cart ? $cart->quantity : 0;
+    //         // return response()->json(['count' => $count]);
+    //         return $count;
+    //     } else {
+    //         // return response()->json(['count' => 0]); // Or redirect to login if needed
+    //         return 0;
+    //     }
+    // }
+
     //     // Assuming you have models for Order, Product, and User
     //      $orders = Order::whereHas('products', function ($query) {
     //     // Retrieve the auth user's store ID
@@ -25,6 +72,24 @@ class OrderController extends BaseController
     //         // Access order details, product details, etc.
     //          }
     //      }
+
+    public function cart()
+    {
+        $order = Auth::user()->cart()->with('cartItems')->first();
+
+        if (!$cart) {
+            // Handle empty cart scenario
+            // (e.g., display message or redirect to storefront)
+            return response()->json([
+                'status' => 400,
+                'message' => 'You don\'t have products in cart, add products first.'      
+            ]);
+        }
+
+        $cartItems = $cart->cartItems;
+        $cartCount = $cart->quantity;
+        $cartTotalPrice = $cart->total;
+    }
 
     public function index()
     {

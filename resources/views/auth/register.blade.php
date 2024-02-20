@@ -85,7 +85,7 @@
               <div class="card-body">
                 <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
+                <a href="https://foodgrubbergreen.com/" class="app-brand-link gap-2">
                   <img src="{{ asset('img/logo.png') }}" alt="foodgrubber logo" width="120px">
                   {{-- <span class="app-brand-text demo text-body fw-bolder">Foodgrubber</span> --}}
                 </a>
@@ -108,8 +108,8 @@
                       />
                       @if ($errors->has('name'))
                       @foreach ($errors->get('name') as $message)
-                          <p style="color:red;">{{ $message }}</p>
-                      @endforeach
+<p style="color:red;">{{ $message }}</p>
+@endforeach
                       @endif
                     </div>
                   <div class="mb-3">
@@ -117,8 +117,8 @@
                     <input type="text" class="form-control" id="email" name="email" required />
                     @if ($errors->has('email'))
                     @foreach ($errors->get('email') as $message)
-                        <p style="color:red;">{{ $message }}</p>
-                    @endforeach
+<p style="color:red;">{{ $message }}</p>
+@endforeach
                 @endif
                   </div>
                     <div class="mb-3 form-password-toggle">
@@ -135,8 +135,8 @@
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         @if ($errors->has('password'))
                       @foreach ($errors->get('password') as $message)
-                          <p style="color:red;">{{ $message }}</p>
-                      @endforeach
+<p style="color:red;">{{ $message }}</p>
+@endforeach
                       @endif
                       </div>
                     </div>
@@ -154,8 +154,8 @@
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         @if ($errors->has('password_confirmation'))
                         @foreach ($errors->get('password_confirmation') as $message)
-                            <p style="color:red;">{{ $message }}</p>
-                        @endforeach
+<p style="color:red;">{{ $message }}</p>
+@endforeach
                       @endif
                       </div>
                     </div>
@@ -214,4 +214,3 @@
     
   </body>
 </html>
-
