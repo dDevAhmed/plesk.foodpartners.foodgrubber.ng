@@ -171,7 +171,7 @@
     <script src="{{ asset('plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset('assets/plugins/datatables/datatables-demo.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/datatables-demo.js') }}"></script>
 
     <!-- UI Modals -->
     <script src="{{ asset('vendors/sneat/assets/js/ui-modals.js') }}"></script>

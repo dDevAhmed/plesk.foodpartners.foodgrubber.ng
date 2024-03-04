@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\BaseController;
 
 class ProductController extends BaseController
 {
@@ -14,9 +16,10 @@ class ProductController extends BaseController
     {
         $pageTitle = 'Products';  // Set the page title for this view
         $userStoreCheck = $this->checkUserStore();
+        $newOrdersCount = $userStoreCheck['newOrdersCount'];
         $categories = ProductCategory::pluck('category');
         $products = Auth::user()->product()->paginate(20);
-        return view('products', compact('pageTitle', 'userStoreCheck', 'categories', 'products'));
+        return view('products', compact('pageTitle', 'userStoreCheck', 'categories', 'products', 'newOrdersCount'));
     }
 
     public function add(Request $request)

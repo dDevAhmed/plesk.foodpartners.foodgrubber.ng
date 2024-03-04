@@ -13,7 +13,8 @@ class UserStoreController extends BaseController
     {
         $pageTitle = 'Store';  // Set the page title for this view
         $userStoreCheck = $this->checkUserStore();
-        return view('store', compact('pageTitle', 'userStoreCheck'));
+        $newOrdersCount = $userStoreCheck['newOrdersCount'];
+        return view('store', compact('pageTitle', 'userStoreCheck', 'newOrdersCount'));
     }
 
     public function updateStore(Request $request)

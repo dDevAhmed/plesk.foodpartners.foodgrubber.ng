@@ -13,18 +13,20 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                {{-- <form id="logoForm" action="{{ route('store.logo.update') }}" method="POST" enctype="multipart/form-data">
+                                {{-- <form id="logoForm" action="{{ route('store.logo.update') }}" method="POST" enctype="multipart/form-data"> --}}
+                                <form id="logoForm" action="" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <img src="{{ Auth::user()->userstore->logo ? asset('img/logos/' . Auth::user()->userstore->logo) : asset('img/default_store_logo.jpg') }}"
+                                    {{-- fixme --}}
+                                    {{-- <img src="{{ Auth::user()->userstore->logo ? asset('img/logos/' . Auth::user()->userstore->logo) : asset('img/default_store_logo.jpg') }}"
                                         alt="user-avatar" class="d-block rounded border" height="160" width="160"
-                                        id="storeLogo" />
+                                        id="storeLogo" /> --}}
                                     <br>
                                     <input type="file" name="logo" id="logoInput" class="d-none">
                                     @error('logo')
                                         <p class="font-light" style="color: red;">{{ $message }}</p>
                                     @enderror
                                     <button type="button" class="btn btn-primary" id="logoUpload" >Upload new logo</button>
-                                </form> --}}
+                                </form>
                             </div>
                             <div class="col-md-8">
                                 <img src="img/default_store_cover.jpg" alt="user-avatar" class="d-block rounded border"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,11 @@ class ProfileController extends BaseController
 {
 
     public function index()
-    {
+    {            
         $pageTitle = 'Profile';  // Set the page title for this view
         $userStoreCheck = $this->checkUserStore();
-        return view('profile', compact('pageTitle', 'userStoreCheck'));
+        $newOrdersCount = $userStoreCheck['newOrdersCount'];
+        return view('profile', compact('pageTitle', 'userStoreCheck', 'newOrdersCount'));
     }
 
     public function updateProfile(Request $request)

@@ -12,7 +12,7 @@ class Order extends Model
     protected $connection = 'foodgrubber_customers';
     protected $table = 'orders'; 
 
-    protected $fillable = ['status'];
+    protected $fillable = ['order_status'];
 
     public function orderItem()
     {

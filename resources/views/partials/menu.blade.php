@@ -61,7 +61,7 @@
                         <div data-i18n="Basic">Orders</div>
                     </div>
                     {{-- show dynamically --}}
-                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">{{$newOrdersCount}}</span>
                 </a>
             </li>
 
