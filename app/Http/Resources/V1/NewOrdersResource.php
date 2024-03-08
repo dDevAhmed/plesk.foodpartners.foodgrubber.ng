@@ -17,7 +17,13 @@ class NewOrdersResource extends JsonResource
         return [
             'order_date' => $this->order_date,
             'total_amount' => $this->total_amount,
-            'delivery_address' => $this->delivery_address
+            'delivery_address' => $this->delivery_address,
+            'items' => $this->orderItem->map(function ($item) {
+                return [
+                    'product' => $item->product,
+                    'quantity' => $item->quantity,
+                ];
+            })->toArray(),
         ];
     }
 }

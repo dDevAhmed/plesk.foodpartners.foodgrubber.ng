@@ -11,21 +11,24 @@ use App\Http\Resources\V1\NewOrdersResource;
 
 class OrderController extends Controller
 {
-    public function newOrdersCount(){
+    public function newOrdersCount()
+    {
         $ordersCount = Order::where('store_id', Auth::user()->userstore->id)
             ->where('order_status', 'placed')
             ->count();
 
-            return response()->json([
-                'status' => 200,
-                'ordersCount' => $ordersCount
-            ]);
+        return response()->json([
+            'status' => 200,
+            'ordersCount' => $ordersCount
+        ]);
     }
-    
-    public function newOrders(){
-        $newOrders = Order::where('order_status', 'placed')
-        ->where('store_id', Auth::user()->userstore->id)
-        ->get();
+
+    public function newOrders()
+    {
+        $newOrders = Order::with('orderItem') // Eager load the relationship
+            ->where('order_status', 'placed')
+            ->where('store_id', Auth::user()->userstore->id)
+            ->get();
 
         return new NewOrdersCollection($newOrders);
     }
@@ -41,10 +44,11 @@ class OrderController extends Controller
         ]);
     }
 
-    public function orders(){
+    public function orders()
+    {
         $orders = Order::where('order_status', 'delivered')
-        ->where('store_id', Auth::user()->userstore->id)
-        ->get();
+            ->where('store_id', Auth::user()->userstore->id)
+            ->get();
 
         return new NewOrdersCollection($orders);
     }
