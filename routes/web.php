@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::put('/orders/{order}/accept', [OrderController::class, 'acceptOrder'])->name('orders.order.accept');
 });
 
 // Route::get('/welcome', function () {

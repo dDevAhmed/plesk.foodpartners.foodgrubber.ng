@@ -302,12 +302,14 @@ button.list-group-item-primary.active {
 }
 
 .nav .nav-link:hover, .nav .nav-link:focus {
-  color: #5f61e6;
+  /* color: #5f61e6; */
+  color: var(--foodgrubber-tertiary-color);
+  background-color: var(--foodgrubber-primary-color);
 }
 
 .nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
-  background-color: #696cff;
-  color: #fff;
+  background-color: var(--foodgrubber-tertiary-color);
+  color: var(--foodgrubber-primary-color);
   box-shadow: 0 2px 4px 0 rgba(105, 108, 255, 0.4);
 }
 

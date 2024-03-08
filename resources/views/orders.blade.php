@@ -39,22 +39,62 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach ($newOrders as $newOrder)
-                                            <tr>
-                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong></strong>
-                                                </td>
-                                                <td>{{ $newOrder->order_date }}</td>
-                                                <td>
-                                                    &#8358; {{ $newOrder->total_amount }}
-                                                </td>
-                                                <td>{{ $newOrder->delivery_address }}</td> {{-- todo use ellisis for address --}}
-                                                <td>
-                                                    {{-- fixme - goes to order detail page / modal --}}
-                                                    <a href="#">view</a>
-                                                    {{-- <i class="fa-thin fa-binoculars"></i>  --}}
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        @if ($newOrdersCount == 0)
+                                            <tr><td colspan="5"><p class="text-center p-2">No orders yet</p></td></tr>
+                                        @else
+                                            @foreach ($newOrders as $newOrder)
+                                                <tr data-bs-toggle="collapse" data-bs-target="#collapse{{ $newOrder->id }}"
+                                                    class="accordion-toggle">
+                                                    <td>{{ $loop->index + 1 . '.' }}</td>
+                                                    <td>{{ $newOrder->order_date }}</td>
+                                                    <td>&#8358; {{ $newOrder->total_amount }}</td>
+                                                    <td>{{ $newOrder->delivery_address }} {{-- todo use ellisis for address --}}</td>
+                                                    <td>
+                                                        <a class="me-1" href="#collapse{{ $newOrder->id }}" role="button"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapse{{ $newOrder->id }}"
+                                                            style="color: var(--foodgrubber-secondary-color);">
+                                                            View Items
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="collapse" id="collapse{{ $newOrder->id }}">
+                                                    <td colspan="6">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Product</th>
+                                                                        <th>Quantity</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @php($serialLetter = 'A')
+                                                                    @foreach ($newOrder->items as $orderItem)
+                                                                        <tr>
+                                                                            <td>{{ $serialLetter++ }}</td>
+                                                                            <td>{{ $orderItem->product }}</td>
+                                                                            <td>{{ $orderItem->quantity }}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        {{-- <a class="btn btn-primary me-1" href="#acceptOrder{{ $newOrder->id }}" --}}
+                                                        <form action="{{ route('orders.order.accept', $newOrder->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT') <input type="hidden" name="newOrderId"
+                                                                value="{{ $newOrder->id }}">
+                                                            <button type="submit" class="btn btn-primary"
+                                                                style="background-color: var(--foodgrubber-tertiary-color); color: var(--foodgrubber-primary-color);">Accept
+                                                                Order</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -74,17 +114,15 @@
                                     <tbody class="table-border-bottom-0">
                                         @foreach ($deliveredOrders as $deliveredOrder)
                                             <tr>
-                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong></strong>
-                                                </td>
+                                                <td>{{ $loop->index + 1 . '.' }}</td>
                                                 <td>{{ $deliveredOrder->order_date }}</td>
                                                 <td>
                                                     &#8358; {{ $deliveredOrder->total_amount }}
                                                 </td>
                                                 <td>{{ $deliveredOrder->delivery_address }}</td> {{-- todo use ellisis for address --}}
                                                 <td>
-                                                    {{-- fixme - goes to order detail page / modal --}}
-                                                    <a href="#">view</a>
-                                                    {{-- <i class="fa-thin fa-binoculars"></i>  --}}
+                                                    <a href="#"
+                                                        style="color: var(--foodgrubber-secondary-color);">View</a>
                                                 </td>
                                             </tr>
                                         @endforeach

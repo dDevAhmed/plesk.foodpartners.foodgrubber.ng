@@ -40,6 +40,7 @@ class ProductCard extends Component
     public function delete()
     {
         $this->product->delete();
+        return redirect()->route('products.index'); 
 
         // fixme - fix thiis
         // $this->emit('productDeleted', $this->product->id);

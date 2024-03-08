@@ -89,6 +89,7 @@ class ProductController extends Controller
             return new ProductResource($product);
         }else{
             return response()->json([
+                
                 'status' => 404,
                 'message' => 'Product not found'
             ]);

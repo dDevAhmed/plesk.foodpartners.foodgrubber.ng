@@ -19,11 +19,31 @@ class OrderController extends BaseController
             ->where('store_id', Auth::user()->userstore->id)
             ->get();
 
-        // $orders = Order::all();
+        // Loop through each order to fetch its corresponding items
+        foreach ($newOrders as $newOrder) {
+            $newOrder->items = $newOrder->orderItem()->get();
+        }
 
-        $pageTitle = 'Orders';  // Set the page title for this view
+        foreach ($deliveredOrders as $deliveredOrder) {
+            $deliveredOrder->items = $deliveredOrder->orderItem()->get();
+        }
+
+        $pageTitle = 'Orders';
         $userStoreCheck = $this->checkUserStore();
         $newOrdersCount = $userStoreCheck['newOrdersCount'];
-        return view('orders', compact('pageTitle', 'userStoreCheck', 'newOrders', 'newOrdersCount', 'deliveredOrders'));
+
+        return view('orders', compact(
+            'pageTitle',
+            'userStoreCheck',
+            'newOrders',
+            'newOrdersCount',
+            'deliveredOrders'
+        ));
+    }
+
+    public function acceptOrder(Request $request, Order $order)
+    {
+        $order->update(['order_status' => 'processing']);
+        return redirect()->route('orders.index'); 
     }
 }

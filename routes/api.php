@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\EmailController;
-use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\StoreController;
+use App\Http\Controllers\Api\V1\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/product/{id}', [ProductController::class, 'update']);
     Route::delete('/product/{id}', [ProductController::class, 'destroy']);
     // Route::resource('products', ProductController::class);
+
+    
+    Route::get('/orders/count', [OrderController::class, 'newOrdersCount']);
+    Route::get('/orders/new', [OrderController::class, 'newOrders']);
+    Route::put('/orders/{order}/accept', [OrderController::class, 'acceptOrder']);
 
 });
 

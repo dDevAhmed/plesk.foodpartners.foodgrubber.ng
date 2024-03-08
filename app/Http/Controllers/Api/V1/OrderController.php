@@ -11,15 +11,6 @@ use App\Http\Resources\V1\NewOrdersResource;
 
 class OrderController extends Controller
 {
-    public function newOrders(){
-        $newOrders = Order::where('order_status', 'placed')
-        ->where('store_id', Auth::user()->userstore->id)
-        ->get();
-
-        return new NewOrdersCollection($newOrders);
-
-    }
-
     public function newOrdersCount(){
         $ordersCount = Order::where('store_id', Auth::user()->userstore->id)
             ->where('order_status', 'placed')
@@ -29,6 +20,25 @@ class OrderController extends Controller
                 'status' => 200,
                 'ordersCount' => $ordersCount
             ]);
+    }
+    
+    public function newOrders(){
+        $newOrders = Order::where('order_status', 'placed')
+        ->where('store_id', Auth::user()->userstore->id)
+        ->get();
+
+        return new NewOrdersCollection($newOrders);
+    }
+
+    public function acceptOrder(Request $request, Order $order)
+    {
+        $order->update(['order_status' => 'processing']);
+        // return redirect()->route('orders.index'); 
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'order accepted'
+        ]);
     }
 
     public function orders(){

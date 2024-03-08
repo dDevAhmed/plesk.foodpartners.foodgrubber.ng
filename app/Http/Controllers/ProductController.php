@@ -35,11 +35,11 @@ class ProductController extends BaseController
         ]);
 
         // fixme - store image as binary
-        // if ($request->hasFile('image1')) {
-        //     $image1Name = time() . '_1.' . $request->image1->getClientOriginalExtension();
-        //     $request->image1->move(public_path('img/products'), $image1Name);
-        //     $product->image1 = $image1Name;
-        // }
+        if ($request->hasFile('image1')) {
+            $image1Name = time() . '_1.' . $request->image1->getClientOriginalExtension();
+            $request->image1->move(public_path('img/products'), $image1Name);
+            $product->image1 = $image1Name;
+        }
 
         // if ($request->hasFile('image1')) {
         //     $imagePath1 = $request->image1->store(public_path('img/products')); // Store image temporarily
@@ -49,11 +49,11 @@ class ProductController extends BaseController
         //     $product->image1 = $encodedImage1;
         // }
 
-        if ($request->hasFile('image1')) {
-            $image1File = $request->file('image1');
-            $encodedImage1 = base64_encode(file_get_contents($image1File->getRealPath()));
-            $product->image1 = $encodedImage1;
-        }
+        // if ($request->hasFile('image1')) {
+        //     $image1File = $request->file('image1');
+        //     $encodedImage1 = base64_encode(file_get_contents($image1File->getRealPath()));
+        //     $product->image1 = $encodedImage1;
+        // }
 
         if ($request->hasFile('image2')) {
             $image2Name = time() . '_2.' . $request->image2->getClientOriginalExtension();
@@ -72,7 +72,7 @@ class ProductController extends BaseController
     }
 
     // Edit Logic (product.edit route)
-    public function editProduct(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
 
