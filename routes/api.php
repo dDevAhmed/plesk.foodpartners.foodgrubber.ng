@@ -38,7 +38,7 @@ Route::post('/forgot-password', [UserController::class, 'forgot_password']);
 
 //ROUTES THAT NEED AUTH AND VERIFIED EMAIL
 // fixme - should add verify in middleware
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
 
     Route::get('/profile', [UserController::class, 'profile']);

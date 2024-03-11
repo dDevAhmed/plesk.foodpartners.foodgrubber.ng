@@ -5,7 +5,9 @@ avatar upload
 loader and stopping on activating / deactivating product
 toast notifications
 store current location
-email verification      === ['auth:sanctum', 'verifiedUser']
+email verification      === ['auth:sanctum', 'verified']
+
+implements MustVerifyEmail
 
 ---things that can be updated later in store    
     name, phone, description, 
