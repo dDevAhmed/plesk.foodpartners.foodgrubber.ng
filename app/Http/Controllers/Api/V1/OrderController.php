@@ -33,15 +33,38 @@ class OrderController extends Controller
         return new NewOrdersCollection($newOrders);
     }
 
-    public function acceptOrder(Request $request, Order $order)
+    public function newOrder(Request $request, String $id)
     {
-        $order->update(['order_status' => 'processing']);
-        // return redirect()->route('orders.index'); 
+        $newOrder = Order::find($id);
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'order accepted'
-        ]);
+        if ($newOrder) {
+            return new NewOrdersResource($newOrder);
+        } else {
+            return response()->json([
+
+                'status' => 404,
+                'message' => 'Order not found'
+            ]);
+        }
+    }
+
+    public function acceptOrder(Request $request, String $id)
+    {
+        $newOrder = Order::find($id);
+
+        if ($newOrder->update(['order_status' => 'processing'])) {
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'order accepted'
+            ]);
+        } else {
+            return response()->json([
+
+                'status' => 404,
+                'message' => 'Error Accepting Order'
+            ]);
+        }
     }
 
     public function orders()

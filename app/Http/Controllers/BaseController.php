@@ -19,9 +19,15 @@ class BaseController extends Controller
         $userStoreCreatedAccepted = $user->userstore && $user->userstore->status === 'a';
         $userStoreAcceptedAway = $user->userstore && $user->userstore->status === 'a' && $user->userstore->availability === false;
 
-        $newOrdersCount = Order::where('store_id', Auth::user()->userstore->id)
-            ->where('order_status', 'placed')
-            ->count();
+        $userstore = Auth::user()->userstore;
+        if ($userstore) {
+            $newOrdersCount = Order::where('store_id', $userstore->id)
+                ->where('order_status', 'placed')
+                ->count();
+        } else {
+            // Handle the case where there's no associated store (e.g., return 0)
+            $newOrdersCount = 0;
+        }
 
         // Collect variables for views:
         $viewData = [

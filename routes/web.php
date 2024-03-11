@@ -24,11 +24,11 @@ Route::get('/', function () {
 });
 
 // fixme - should add the 'verified' in the middleware
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [AppController::class, 'index'])->name('app.index');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
 

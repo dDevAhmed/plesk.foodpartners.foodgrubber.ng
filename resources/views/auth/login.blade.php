@@ -43,6 +43,8 @@
       rel="stylesheet"
     />
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon/favicon.ico') }}" />
+
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('vendors/sneat/assets/vendor/fonts/boxicons.css') }}" />
     <!-- font awesome -->
