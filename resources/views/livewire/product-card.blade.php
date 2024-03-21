@@ -1,7 +1,15 @@
 <div class="card h-100">
-    <img class="card-img-top"
+    {{-- <img class="card-img-top"
         src="{{ $product->image1 ? asset('img/products/' . $product->image1) : asset('img/products/no-product-image.png') }}"
-        alt="Product Image" style="height: 200px; object-fit:cover;" />
+        alt="Product Image" style="height: 200px; object-fit:cover;" /> --}}
+    @if ($product->image1)
+        <img class="card-img-top" src="{{ $product->image1 }}" alt="Product Image"
+            style="height: 200px; object-fit: cover;" />
+    @else
+        <img class="card-img-top" src="{{ asset('img/products/no-product-image.png') }}" alt="Product Image"
+            style="height: 200px; object-fit: cover;" />
+    @endif
+
     <div class="card-body text-start">
         <h6 class="card-subtitle text-muted mb-3">({{ $product->category }})</h6>
         <h5 class="card-title">{{ $product->name }}</h5>
@@ -26,13 +34,15 @@
                 <i class="tf-icons bx bx-pencil" style="color: #17a2b8;"></i>
             </button>
 
-            <button type="button" class="btn btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" wire:click="delete">
+            <button type="button" class="btn btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                wire:click="delete">
                 <i class="tf-icons bx bx-trash" style="color: #dc3545;"></i>
             </button>
         </div>
     </div>
     @if ($product->availability == 0)
-        <div class="card-f bg-danger text-white text-center" style="height: 20px !important; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+        <div class="card-f bg-danger text-white text-center"
+            style="height: 20px !important; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
             <p style="margin-top:-2px;">inactive</p>
         </div>
     @endif

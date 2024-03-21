@@ -14,18 +14,31 @@
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 {{-- <form id="logoForm" action="{{ route('store.logo.update') }}" method="POST" enctype="multipart/form-data"> --}}
-                                <form id="logoForm" action="" method="POST" enctype="multipart/form-data">
+                                @if (Auth::user()->userstore->logo)
+                                    <img class="d-block rounded border" height="160" width="160"
+                                        src="{{ Auth::user()->userstore->logo }}" alt="Store Logo" />
+                                @else
+                                    <img class="d-block rounded border" height="160" width="160"
+                                        src="{{ asset('img/default_store_logo.jpg') }}" alt="Store Logo" />
+                                @endif
+
+                                <br>
+                                <form id="logoForm" action="{{ route('store.logo.update') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
+                                    {{-- <label for="logo" class="form-label">Image 1</label> --}}
+                                    <input type="file" id="logo" name="logo" class="form-control"/>
+                                    <button type="submit" class="btn btn-primary">Upload new logo</button>
                                     {{-- fixme --}}
                                     {{-- <img src="{{ Auth::user()->userstore->logo ? asset('img/logos/' . Auth::user()->userstore->logo) : asset('img/default_store_logo.jpg') }}"
                                         alt="user-avatar" class="d-block rounded border" height="160" width="160"
                                         id="storeLogo" /> --}}
-                                    <br>
+                                    {{-- <br>
                                     <input type="file" name="logo" id="logoInput" class="d-none">
                                     @error('logo')
                                         <p class="font-light" style="color: red;">{{ $message }}</p>
                                     @enderror
-                                    <button type="button" class="btn btn-primary" id="logoUpload" >Upload new logo</button>
+                                    <button type="button" class="btn btn-primary" id="logoUpload">Upload new logo</button> --}}
                                 </form>
                             </div>
                             <div class="col-md-8">

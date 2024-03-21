@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'bunnynetcdn' => [
+        'api_access_key' => env('BUNNYNETCDN_API_ACCESS_KEY'),
+        'storage_zone_name' => env('BUNNYNETCDN_STORAGE_ZONE_NAME'),
+        'storage_zone_region' => env('BUNNYNETCDN_STORAGE_ZONE_REGION'),
+    ],
+    
+
 ];

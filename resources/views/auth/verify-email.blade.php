@@ -106,13 +106,13 @@
                                 style="background: #454545; color: #fef301; border: none;">Resend Verification Email</button>
                             </form>
 
-                            {{-- <form method="POST" action="{{ route('logout') }}">
+                            <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <button type="submit" class="mt-4 text-center" style="background: transparent; color: #01c324; border: none;">
                                     {{ __('Log Out') }}
                                 </button>
-                            </form> --}}
+                            </form>
                         </div>
 
                         {{-- <div class="text-center">

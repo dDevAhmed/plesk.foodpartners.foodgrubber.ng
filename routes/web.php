@@ -6,6 +6,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FileUploaderController;
 use App\Http\Controllers\UserStoreController;
 
 /*
@@ -59,5 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Route::get('/welcome', function () {
 //     return view('welcome');
 // });
+
+Route::get('/file/get/{filepath}', [FileUploaderController::class, 'getFile']);
 
 require __DIR__ . '/auth.php';

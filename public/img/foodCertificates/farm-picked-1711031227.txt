@@ -1,0 +1,11 @@
+APIs endpoint
+
+===checked
+login
+
+
+===store
+view store 		GET	/store
+update store		POST	/store
+get store logo		GET	/store/logo
+update store logo	POST	/store/logo
