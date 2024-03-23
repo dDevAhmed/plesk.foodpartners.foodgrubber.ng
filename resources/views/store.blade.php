@@ -4,6 +4,12 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Store /</span> Store</h4>
 
+        @if (session('error') || session('success'))
+            <div class="alert {{ session('error') ? 'alert-danger' : 'alert-success' }}">
+                {{ session('error') ? session('error') : session('success') }}
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
@@ -13,34 +19,21 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                {{-- <form id="logoForm" action="{{ route('store.logo.update') }}" method="POST" enctype="multipart/form-data"> --}}
-                                @if (Auth::user()->userstore->logo)
-                                    <img class="d-block rounded border" height="160" width="160"
-                                        src="{{ Auth::user()->userstore->logo }}" alt="Store Logo" />
-                                @else
-                                    <img class="d-block rounded border" height="160" width="160"
-                                        src="{{ asset('img/default_store_logo.jpg') }}" alt="Store Logo" />
-                                @endif
-
+                                <img class="d-block rounded border" height="160" width="160" id="storeLogo"
+                                    alt="Store Logo"
+                                    src="{{ isset(Auth::user()->userstore->logo) ? Auth::user()->userstore->logo : asset('img/default_store_logo.jpg') }}" />
                                 <br>
+
                                 <form id="logoForm" action="{{ route('store.logo.update') }}" method="POST"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" style="display: none;">
                                     @csrf
-                                    {{-- <label for="logo" class="form-label">Image 1</label> --}}
-                                    <input type="file" id="logo" name="logo" class="form-control"/>
-                                    <button type="submit" class="btn btn-primary">Upload new logo</button>
-                                    {{-- fixme --}}
-                                    {{-- <img src="{{ Auth::user()->userstore->logo ? asset('img/logos/' . Auth::user()->userstore->logo) : asset('img/default_store_logo.jpg') }}"
-                                        alt="user-avatar" class="d-block rounded border" height="160" width="160"
-                                        id="storeLogo" /> --}}
-                                    {{-- <br>
-                                    <input type="file" name="logo" id="logoInput" class="d-none">
-                                    @error('logo')
-                                        <p class="font-light" style="color: red;">{{ $message }}</p>
-                                    @enderror
-                                    <button type="button" class="btn btn-primary" id="logoUpload">Upload new logo</button> --}}
+                                    <input type="file" id="logo" name="logo" class="form-control"
+                                        accept="image/*">
                                 </form>
+
+                                <button type="button" class="btn btn-primary" id="logoUpload">Change Logo</button>
                             </div>
+
                             <div class="col-md-8">
                                 <img src="img/default_store_cover.jpg" alt="user-avatar" class="d-block rounded border"
                                     height="160" width="360" id="uploadedAvatar" />
@@ -49,8 +42,8 @@
                                     <label for="upload" class="btn btn-primary me-2" tabindex="0">
                                         <span class="d-none d-sm-block">Upload new cover</span>
                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                        <input type="file" id="upload" class="account-file-input" hidden
-                                            accept="image/png, image/jpeg" />
+                                        {{-- <input type="file" id="upload" class="account-file-input" hidden
+                                            accept="image/png, image/jpeg" /> --}}
                                     </label>
                                 </div>
                             </div>
@@ -143,8 +136,7 @@
         </div>
     </div>
 
-    @push('script')
-        {{-- <script>
+    {{-- <script>
             @if (session('success'))
                 showToast("{{ session('success') }}", "success");
             @elseif (session('fail'))
@@ -152,23 +144,13 @@
             @endif
         </script> --}}
 
-        <script>
-            $(document).ready(function() {
-                $('#logoUpload').on('click', function() {
-                    console.log(' upload logoooooooooo');
-                    alert('Upload photo');
-                    $('#logoInput').trigger('click');
-                });
+    <script>
+        document.getElementById('logoUpload').addEventListener('click', function() {
+            document.getElementById('logo').click();
+        });
 
-                $('#logoInput').on('change', function(event) {
-                    var selectedImageFile = event.target.files[0];
-                    if (selectedImageFile) {
-                        var imageObjectURL = URL.createObjectURL(selectedImageFile);
-                        $('#storeLogo').attr('src', imageObjectURL);
-                        $('#logoForm').submit(); // submit the form
-                    }
-                });
-            });
-        </script>
-    @endpush
+        document.getElementById('logo').addEventListener('change', function() {
+            document.getElementById('logoForm').submit();
+        });
+    </script>
 @endsection

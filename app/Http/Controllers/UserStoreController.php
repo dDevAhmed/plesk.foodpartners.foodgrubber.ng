@@ -16,14 +16,6 @@ class UserStoreController extends BaseController
     public $storageZoneRegion;
     public $client;
 
-    // Retrieve credentials from .env
-    // public $apiAccessKey = config('services.bunnynetcdn.api_access_key');
-    // public $storageZoneName = config('services.bunnynetcdn.storage_zone_name');
-    // public $storageZoneRegion = config('services.bunnynetcdn.storage_zone_region');
-
-    // // Create the BunnyNet CDN client
-    // public $client = new Client($apiAccessKey, $storageZoneName, \Bunny\Storage\Region::LONDON);
-
     public function __construct()
     {
         $this->apiAccessKey = config('services.bunnynetcdn.api_access_key');
@@ -46,38 +38,6 @@ class UserStoreController extends BaseController
     {
         $user = auth()->user();
 
-        if ($request->hasFile('food_cert')) {
-            $storeName = $request->input('name'); // Assuming store name is available in the request
-            $foodCert = Str::slug($storeName) . '-' . time() . '.' . $request->food_cert->getClientOriginalExtension();
-            $request->food_cert->move(public_path('img/foodCertificates'), $foodCert);
-        }
-
-        if ($request->hasFile('food_cert')) {
-            // Get the file extension
-            $extension = $request->food_cert->getClientOriginalExtension();
-
-            // Generate a unique filename
-            $foodCertName = time() . '_1.' . $extension;
-
-            // Upload the file to Bunnynet CDN
-            $this->client->upload($request->file('food_cert')->getRealPath(), 'documents/foodcertificates/' . $foodCertName);
-
-            // Construct the CDN URL
-            $cdnUrl = 'https://foodgrubbergreen.b-cdn.net/documents/foodcertificates/' . $foodCertName;
-
-            // Update the food certificate URL in the database
-            $foodPartner = Auth::user()->userstore;
-            $foodPartner->food_cert = $cdnUrl;
-            $foodPartner->save();
-        }
-
-        // for logo and cover???
-        // if ($request->hasFile('food_cert')) {
-        //     $storeName = $request->input('name'); // Assuming store name is available in the request
-        //     $foodCert = Str::slug($storeName) .'-' .time() . '.' . $request->food_cert->getClientOriginalExtension();
-        //     $request->food_cert->move(public_path('img/foodCertificates'), $foodCert);
-        // }
-
         $user->userstore()->updateOrCreate(
             ['user_id' => $user->id], // column/value pairs to find
             [ // column/value pairs to update or create
@@ -90,7 +50,7 @@ class UserStoreController extends BaseController
                 // 'current_location' => $request->current_location,    //fixme - get the current location
                 'description' => $request->description,
                 'food_cert_number' => $request->food_cert_number,
-                'food_cert' => $foodCert,
+                // 'food_cert' => $foodCert,
                 'account_number' => $request->account_number,
                 'sort_code' => $request->sort_code,
                 'bank' => $request->bank,
@@ -100,31 +60,50 @@ class UserStoreController extends BaseController
             ]
         );
 
-        return back()->with('success', "Store Updated successfully");
+        if ($request->hasFile('food_cert')) {
+            // Get the file extension
+            $extension = $request->food_cert->getClientOriginalExtension();
+            // Generate a unique filename
+            $foodCertName = time() . '_1.' . $extension;
+            // Upload the file to Bunnynet CDN
+            $this->client->upload($request->file('food_cert')->getRealPath(), 'documents/foodcertificates/' . $foodCertName);
+            // Construct the CDN URL
+            $cdnUrl = 'https://foodgrubbergreen.b-cdn.net/documents/foodcertificates/' . $foodCertName;
+            // Update the food certificate URL in the database
+            $foodPartner = Auth::user()->userstore;
+            $foodPartner->food_cert = $cdnUrl;
+            $foodPartner->save();
+        }
+
+        return back()->with('success', 'Store Updated successfully');
     }
 
     public function updateLogo(Request $request)
     {
         if ($request->hasFile('logo')) {
-            // Get the file extension
-            $extension = $request->logo->getClientOriginalExtension();
 
-            // Generate a unique filename
-            $logoName = time() . '_1.' . $extension;
-
-            // Upload the file to Bunnynet CDN
-            $this->client->upload($request->file('logo')->getRealPath(), 'images/logos/' . $logoName);
-
-            // Construct the CDN URL
-            $cdnUrl = 'https://foodgrubbergreen.b-cdn.net/images/logos/' . $logoName;
-
-            // Update the logo URL in the database
             $foodPartner = Auth::user()->userstore;
-            $foodPartner->logo = $cdnUrl;
-            $foodPartner->save();
+            if ($foodPartner) {
+                // Get the file extension
+                $extension = $request->logo->getClientOriginalExtension();
+                // Generate a unique filename
+                $logoName = time() . '_1.' . $extension;
+                // Upload the file to Bunnynet CDN
+                $this->client->upload($request->file('logo')->getRealPath(), 'images/logos/' . $logoName);
+                // Construct the CDN URL
+                $cdnUrl = 'https://foodgrubbergreen.b-cdn.net/images/logos/' . $logoName;
+                // Update the logo URL in the database
+                $foodPartner = Auth::user()->userstore;
+                $foodPartner->logo = $cdnUrl;
+                $foodPartner->save();
+            } else {
+                // return back()->with('error', 'You need to create a store first before uploading a logo.');
+                session()->flash('error', 'You need to create a store first before uploading a logo.');
+            }
         }
 
-        return back()->with('success', 'Logo updated successfully.');
+        // session()->flash('success', 'Logo updated successfully.');
+        return back()->with('success', "Logo updated successfully");
     }
 
     // public function updateStoreAvailability(){

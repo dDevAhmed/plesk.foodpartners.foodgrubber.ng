@@ -4,6 +4,12 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Profile</h4>
 
+        @if (session('error') || session('success'))
+            <div class="alert {{ session('error') ? 'alert-danger' : 'alert-success' }}">
+                {{ session('error') ? session('error') : session('success') }}
+            </div>
+        @endif
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">

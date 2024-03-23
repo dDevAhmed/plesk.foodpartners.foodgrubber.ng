@@ -61,6 +61,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //     return view('welcome');
 // });
 
-Route::get('/file/get/{filepath}', [FileUploaderController::class, 'getFile']);
-
 require __DIR__ . '/auth.php';

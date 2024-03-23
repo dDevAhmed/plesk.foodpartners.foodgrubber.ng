@@ -14,12 +14,20 @@ use App\Http\Controllers\BaseController;
 
 class ProductController extends BaseController
 {
-    // private $bunnyClient;
+    public $apiAccessKey;
+    public $storageZoneName;
+    public $storageZoneRegion;
+    public $client;
 
-    // public function __construct(Client $bunnyClient)
-    // {
-    //     $this->bunnyClient = $bunnyClient;
-    // }
+    public function __construct()
+    {
+        $this->apiAccessKey = config('services.bunnynetcdn.api_access_key');
+        $this->storageZoneName = config('services.bunnynetcdn.storage_zone_name');
+        $this->storageZoneRegion = config('services.bunnynetcdn.storage_zone_region');
+
+        // Create the BunnyNet CDN client
+        $this->client = new Client($this->apiAccessKey, $this->storageZoneName, \Bunny\Storage\Region::LONDON);  //\Bunny\Storage\Region::LONDON
+    }
 
     public function index()
     {
@@ -82,16 +90,6 @@ class ProductController extends BaseController
 
     public function add(Request $request)
     {
-        // Retrieve credentials from .env
-        $apiAccessKey = config('services.bunnynetcdn.api_access_key');
-        $storageZoneName = config('services.bunnynetcdn.storage_zone_name');
-        $storageZoneRegion = config('services.bunnynetcdn.storage_zone_region');
-
-        // Create the BunnyNet CDN client
-        $client = new Client($apiAccessKey, $storageZoneName, \Bunny\Storage\Region::LONDON);
-
-        // $client = new Client('bfad6a1b-862d-4eac-b31c7c71e48b-46fa-43e2', 'foodgrubbergreen', \Bunny\Storage\Region::LONDON);
-
         $product = new Product([
             'store_id' => Auth::user()->userstore->id,
             'name' => $request->name,
@@ -105,48 +103,41 @@ class ProductController extends BaseController
         if ($request->hasFile('image1')) {
             // Get the file extension
             $extension = $request->image1->getClientOriginalExtension();
-
             // Generate a unique filename
             $imageName = time() . '_1.' . $extension;
-
             // Upload the file to Bunnynet CDN
-            $client->upload($request->file('image1')->getRealPath(), 'images/products/' . $imageName);
-
+            $this->client->upload($request->file('image1')->getRealPath(), 'images/products/' . $imageName);
             // Construct the CDN URL manually
             $cdnUrl = 'https://foodgrubbergreen.b-cdn.net/images/products/' . $imageName;
-
             // Set the product image URL to the CDN URL
             $product->image1 = $cdnUrl;
         }
 
         $product->save();
 
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Product added successfully'
-        ]);
+        return back()->with('success', 'Product added successfully');
     }
 
 
-    private function uploadImages(Request $request, Product $product)
-    {
-        if ($request->hasFile('image1')) {
-            $fileName = $this->generateUniqueFilename($request->image1->getClientOriginalExtension());
-            $this->bunnyClient->upload($request->image1->getRealPath(), 'path/to/product/images/' . $fileName); // Use getRealPath for local file path
-            $product->image1 = $fileName;
-        }
+    // private function uploadImages(Request $request, Product $product)
+    // {
+    //     if ($request->hasFile('image1')) {
+    //         $fileName = $this->generateUniqueFilename($request->image1->getClientOriginalExtension());
+    //         $this->bunnyClient->upload($request->image1->getRealPath(), 'path/to/product/images/' . $fileName); // Use getRealPath for local file path
+    //         $product->image1 = $fileName;
+    //     }
 
-        if ($request->hasFile('image2')) {
-            $fileName = $this->generateUniqueFilename($request->image2->getClientOriginalExtension());
-            $this->bunnyClient->upload($request->image2->getRealPath(), 'path/to/product/images/' . $fileName);
-            $product->image2 = $fileName;
-        }
-    }
+    //     if ($request->hasFile('image2')) {
+    //         $fileName = $this->generateUniqueFilename($request->image2->getClientOriginalExtension());
+    //         $this->bunnyClient->upload($request->image2->getRealPath(), 'path/to/product/images/' . $fileName);
+    //         $product->image2 = $fileName;
+    //     }
+    // }
 
-    private function generateUniqueFilename($extension)
-    {
-        return time() . '.' . $extension;
-    }
+    // private function generateUniqueFilename($extension)
+    // {
+    //     return time() . '.' . $extension;
+    // }
 
     // Edit Logic (product.edit route)
     public function update(Request $request, $id)

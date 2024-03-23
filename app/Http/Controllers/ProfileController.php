@@ -45,7 +45,7 @@ class ProfileController extends BaseController
         $user->save();
 
         // Return success message without redirection
-        return back()->with('status', 'Profile updated successfully');
+        return back()->with('success', 'Profile updated successfully');
     }
 
     public function updatePassword(Request $request)
